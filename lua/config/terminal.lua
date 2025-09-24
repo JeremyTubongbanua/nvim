@@ -1,7 +1,7 @@
 local M = {}
 
 local state = {
-  height = 10,
+  height = 24,
   primary = {},
   secondary = {},
 }

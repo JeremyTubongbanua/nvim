@@ -11,19 +11,21 @@ local options = {
   tabstop = 2,
   shiftwidth = 2,
   softtabstop = 2,
-  list = true,
-  listchars = {
-    tab = "> ",
-    trail = ".",
-    extends = ">",
-    precedes = "<",
-  },
-  foldmethod = "expr",
-  foldexpr = "nvim_treesitter#foldexpr()",
-  foldlevel = 99,
-  foldlevelstart = 99,
-  foldenable = true,
-  foldcolumn = "0",
+  -- list = true,
+  -- listchars = {
+  --   tab = "> ",
+  --   trail = ".",
+  --   extends = ">",
+  --   precedes = "<",
+  -- },
+  -- foldmethod = "expr",
+  -- foldexpr = "nvim_treesitter#foldexpr()",
+  -- foldlevel = 99,
+  -- foldlevelstart = 99,
+  -- foldenable = true,
+  -- foldcolumn = "0",
+  -- Mirror absolute and relative numbers in the gutter.
+  -- statuscolumn = "%s%=%{v:lnum} %{v:relnum == 0 and '' or v:relnum}",
 }
 
 for name, value in pairs(options) do

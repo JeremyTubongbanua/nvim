@@ -1,9 +1,8 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
+
 require("config.options")
 require("config.keymaps")
-require("config.autocmds")
-require("config.neovide")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -22,10 +21,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  install = { colorscheme = { "habamax" } },
-  checker = { enabled = true },
   spec = {
     { import = "plugins" },
-  }
+  },
 })
-
