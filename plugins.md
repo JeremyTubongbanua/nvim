@@ -1,34 +1,37 @@
 # Plugins
 
-Short descriptions of the specs in `lua/plugins/` and how they fit together.
+Overview of the specs under `lua/plugins/` and how they interact.
 
-## Editing & Selections
-- `windwp/nvim-autopairs` (`lua/plugins/autopairs.lua`) - closes pairs when `InsertEnter` fires; no extra config needed.
-- `numToStr/Comment.nvim` (`lua/plugins/comment.lua`) - loads on `VeryLazy` so `gc` toggles are available once the UI settles.
-- `mg979/vim-visual-multi` (`lua/plugins/multicursor.lua`) - defines a `\` leader with custom find-under, regex, and vertical cursor mappings.
+## Editing & Motions
+- `windwp/nvim-autopairs` (`lua/plugins/autopairs.lua`) – enables auto-insertion of closing characters on `InsertEnter` with default behaviour.
+- `numToStr/Comment.nvim` (`lua/plugins/comment.lua`) – lazy-loads on `VeryLazy` so `gc`/`gb` toggles appear once Neovim finishes starting.
+- `mg979/vim-visual-multi` (`lua/plugins/multicursor.lua`) – maps the `\` leader for multi-cursor find-under, regex, and vertical selection workflows.
+- `karb94/neoscroll.nvim` (`lua/plugins/smooth_scroll.lua`) – smooth scrolling animation with quadratic easing, keeping the cursor hidden while animating.
 
-## Buffers & Look-and-Feel
-- `ojroques/nvim-bufdel` (`lua/plugins/bufdelete.lua`) - replaces bare `:bd`, keeping splits alive and hopping to the alternate buffer.
-- `famiu/bufdelete.nvim` (`lua/plugins/bufferline.lua`) - helper layer Bufferline calls for close, right-click, and middle-click actions.
-- `akinsho/bufferline.nvim` (`lua/plugins/bufferline.lua`) - UI tabline with `<Tab>`/`<S-Tab>` cycling, `<leader>bp` picking, and Bufdelete-backed close commands.
-- `nvim-lualine/lualine.nvim` (`lua/plugins/lualine.lua`) - automatic theme-aware statusline; icons draw via Devicons.
-- `EdenEast/nightfox.nvim` (`lua/plugins/colorscheme.lua`) - applies the Nightfox palette with italic/bold tweaks at startup.
-- `petertriho/nvim-scrollbar` (`lua/plugins/scrollbar.lua`) - attaches on `BufReadPost` to render a thin scrollbar showing cursor position.
-- `nvim-tree/nvim-web-devicons` (declared in multiple specs) - Nerd Font glyph provider for Bufferline, Lualine, and Neo-tree.
+## Buffers & Interface
+- `akinsho/bufferline.nvim` (`lua/plugins/bufferline.lua`) – VS Code-style buffer tabs with `<Tab>/<S-Tab>` cycling, `<leader>x` delete (using Bufdelete), and a Neo-tree offset.
+- `ojroques/nvim-bufdel` (`lua/plugins/bufdelete.lua`) – safe buffer closing that preserves splits; bufferline’s close commands defer to this helper.
+- `nvim-lualine/lualine.nvim` (`lua/plugins/lualine.lua`) – Dracula-themed statusline with icon support via Devicons.
+- `petertriho/nvim-scrollbar` (`lua/plugins/scrollbar.lua`) – draws a minimal scrollbar after `BufReadPost` to show cursor position and diagnostics.
+- `catppuccin/nvim` (`lua/plugins/catpuccin.lua`) – sets the Catppuccin Mocha colourscheme with italic/bold accents.
+- `lukas-reineke/indent-blankline.nvim` (`lua/plugins/indent_guides.lua`) – renders ASCII indent guides on buffer load to highlight nesting depth.
 
 ## Navigation & Discovery
-- `nvimdev/dashboard-nvim` (`lua/plugins/dashboard.lua`) - Hyper startup screen on `VimEnter` with Telescope-powered shortcuts for updates, files, buffers, and grep.
-- `nvim-neo-tree/neo-tree.nvim` (`lua/plugins/neo-tree.lua`) - `<leader>e` toggles filesystem, buffers, and git views with `C` descend and `X` ascend mappings.
-- `nvim-telescope/telescope.nvim` (`lua/plugins/telescope.lua`) - fuzzy finder loaded by `:Telescope`, `<leader>ff`, or `<leader>fg`; depends on Plenary.
-- `folke/which-key.nvim` (`lua/plugins/which-key.lua`) - `VeryLazy` hint popups that explain keybinding groups when idle.
+- `nvimdev/dashboard-nvim` (`lua/plugins/dashboard.lua`) – Hyper dashboard on `VimEnter` with Telescope-powered shortcuts for updates, files, buffers, and live grep.
+- `nvim-neo-tree/neo-tree.nvim` (`lua/plugins/neo-tree.lua`) – `<leader>e` toggles a left-positioned tree covering filesystem, buffers, and git status with custom descend/ascend mappings.
+- `nvim-telescope/telescope.nvim` (`lua/plugins/telescope.lua`) – fuzzy finder triggered via `:Telescope` or `<leader>f`, backed by Plenary.
+- `folke/which-key.nvim` (`lua/plugins/which-key.lua`) – key-hint popups that surface grouped mappings when input pauses.
 
-## LSP & Language Features
-- `williamboman/mason.nvim` (`lua/plugins/lsp.lua`) - installer UI for external LSP tools; `:MasonUpdate` runs on build.
-- `williamboman/mason-lspconfig.nvim` (`lua/plugins/lsp.lua`) - ensures `lua_ls`, wiring shared handlers so added servers inherit defaults.
-- `neovim/nvim-lspconfig` (`lua/plugins/lsp.lua`) - registers the client and buffer keymaps for goto, hover, rename, code actions, and diagnostics.
-- `nvim-treesitter/nvim-treesitter` (`lua/plugins/treesitter.lua`) - runs `:TSUpdate` at install, enabling tree-sitter highlighting and indentation.
+## Language Servers & Tooling
+- `williamboman/mason.nvim` (`lua/plugins/lsp-config.lua`) – GUI installer/back-end for external LSP binaries.
+- `williamboman/mason-lspconfig.nvim` (`lua/plugins/lsp-config.lua`) – ensures servers declared in the config are installed when Mason supports them.
+- `neovim/nvim-lspconfig` (`lua/plugins/lsp-config.lua`) – shares a default `on_attach`, enables clangd/pyright/dartls clients, and wires common diagnostics & refactor keymaps.
+- `akinsho/flutter-tools.nvim` (`lua/plugins/lsp-config.lua`) – Flutter-specific wrapper that reuses the shared LSP capabilities and mappings.
+
+## Treesitter & Syntax
+- `nvim-treesitter/nvim-treesitter` (`lua/plugins/treesitter.lua`) – installs parsers via `:TSUpdate`, enabling tree-sitter highlighting and indentation.
 
 ## Shared Libraries
-- `nvim-lua/plenary.nvim` - async and filesystem helpers used by Telescope and Neo-tree.
-- `MunifTanjim/nui.nvim` - UI primitives Neo-tree relies on for popups and layouts.
-
+- `nvim-lua/plenary.nvim` – Lua utility layer required by Telescope, Neo-tree, and Flutter tools.
+- `MunifTanjim/nui.nvim` – UI primitives consumed by Neo-tree.
+- `nvim-tree/nvim-web-devicons` (`lua/plugins/nvim-web-devicons.lua`) – Nerd Font icons for Bufferline, Lualine, and Neo-tree.
